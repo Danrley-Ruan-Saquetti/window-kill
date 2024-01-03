@@ -9,7 +9,7 @@ export function Bootstrap() {
 
     const app = new AppController({ canvas: canvasDom })
 
-    app.start()
+    app.emitter.emit('/game/start', {})
 
     addEventListener('resize', () => {
         app.emitter.emit('/window/resize', { width: innerWidth, height: innerHeight })
