@@ -8,4 +8,8 @@ export function Bootstrap() {
     }
 
     const app = new AppController({ canvas: canvasDom })
+
+    app.start()
+
+    return app
 }

@@ -11,6 +11,11 @@ export class CanvasEntity {
         this.context = canvasElement.getContext('2d') as CanvasRenderingContext2D
     }
 
+    updateDimension(args: { width?: number, height?: number } = {}) {
+        this.getCanvas().width = args.width || this.getCanvas().width
+        this.getCanvas().height = args.height || this.getCanvas().height
+    }
+
     getCanvas() {
         return this.canvasElement
     }

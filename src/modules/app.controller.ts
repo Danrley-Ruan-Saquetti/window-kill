@@ -1,9 +1,17 @@
-import { CanvasEntity } from './canvas/canvas.entity.js'
+import { CanvasController } from './canvas/canvas.controller.js'
 
 export class AppController {
-    private canvasEntity: CanvasEntity
+    private canvasController: CanvasController
 
     constructor({ canvas }: { canvas: HTMLCanvasElement }) {
-        this.canvasEntity = new CanvasEntity(canvas)
+        this.canvasController = new CanvasController({ canvas })
+    }
+
+    start() {
+        this.canvasController.start()
+    }
+
+    stop() {
+        this.canvasController.stop()
     }
 }
