@@ -11,5 +11,9 @@ export function Bootstrap() {
 
     app.start()
 
+    addEventListener('resize', () => {
+        app.emitter.emit('/window/resize', { width: innerWidth, height: innerHeight })
+    })
+
     return app
 }
