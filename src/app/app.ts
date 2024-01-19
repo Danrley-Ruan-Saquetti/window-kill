@@ -12,12 +12,14 @@ export class AppController {
     constructor({ canvasSelector = '' }: AppInstanceOptions) {
         this.gameController = new GameController()
         this.canvasController = new CanvasController()
+    }
 
-        this.canvasController.setCanvas(document.querySelector(canvasSelector) as HTMLCanvasElement)
+    initComponents() {
+        this.gameController.initComponents()
+        this.canvasController.initComponents()
     }
 
     start() {
-        this.updateSizeCanvas()
         this.gameController.start()
         this.canvasController.start()
     }
@@ -25,12 +27,5 @@ export class AppController {
     stop() {
         this.gameController.stop()
         this.canvasController.stop()
-    }
-
-    private updateSizeCanvas() {
-        this.canvasController.resizeCanvas({
-            width: window.innerWidth,
-            height: window.innerHeight,
-        })
     }
 }

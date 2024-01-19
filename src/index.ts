@@ -1,13 +1,16 @@
 import { AppController } from './app/app.js'
 
-window.onload = App
+window.onload = () => {
+    try {
+        App()
+    } catch (err: any) {
+        console.error(err)
+    }
+}
 
 function App() {
     const appController = new AppController({ canvasSelector: 'canvas#game-view' })
 
-    try {
-        appController.start()
-    } catch (err: any) {
-        console.error(err)
-    }
+    appController.initComponents()
+    appController.start()
 }

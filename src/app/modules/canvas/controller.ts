@@ -1,5 +1,4 @@
-import { Dimension } from '../../../types/index.js'
-import { CanvasModel, CanvasRepository } from './model.js'
+import { CanvasRepository } from './model.js'
 
 export class CanvasController {
     private repo: CanvasRepository
@@ -9,7 +8,16 @@ export class CanvasController {
         this.repo = new CanvasRepository()
     }
 
+    initComponents() {
+        this.repo.canvas = document.querySelector('canvas#game-view') as HTMLCanvasElement
+
+        window.addEventListener('resize', () => {
+            this.resizeCanvas()
+        })
+    }
+
     start() {
+        this.resizeCanvas()
         this.update()
     }
 
@@ -21,12 +29,8 @@ export class CanvasController {
         this.requestAnimationFrameId = requestAnimationFrame(() => this.update())
     }
 
-    resizeCanvas({ height, width }: Dimension) {
-        this.repo.canvas.width = width
-        this.repo.canvas.height = height
-    }
-
-    setCanvas(canvas: CanvasModel.Canvas) {
-        this.repo.setCanvas(canvas)
+    resizeCanvas() {
+        this.repo.canvas.width = window.innerWidth
+        this.repo.canvas.height = window.innerHeight
     }
 }

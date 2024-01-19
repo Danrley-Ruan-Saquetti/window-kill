@@ -3,11 +3,12 @@ import { GameRepository } from './model.js'
 export class GameController {
     private repo: GameRepository
     private requestAnimationFrameId = 0
-    private count = 0
 
     constructor() {
         this.repo = new GameRepository()
     }
+
+    initComponents() {}
 
     start() {
         if (this.isRunning()) {
