@@ -1,3 +1,7 @@
-import { Bootstrap } from './bootstrap.js'
+import { AppController } from './app/app.js'
 
-window.onload = Bootstrap
+window.onload = App
+
+function App() {
+    const appController = new AppController({ canvasSelector: 'canvas#game-view' })
+}
