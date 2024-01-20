@@ -9,9 +9,17 @@ export class PlayerController {
     }
 
     initComponents() {
-        window.addEventListener('keydown', ev => {
-            console.log(PlayerModel.getKeyPressed[ev.key])
-        })
+        window.addEventListener('keydown', ev => this.keyPressed(ev.key))
+    }
+
+    keyPressed(key: string) {
+        const action = PlayerModel.getKeyPressed(key)!
+
+        if (!this.gameRepository.getPlayer().isValidKey(action)) {
+            return
+        }
+
+        this.gameRepository.getPlayer().GLOBAL_MAP_KEY[action]()
     }
 
     update() {

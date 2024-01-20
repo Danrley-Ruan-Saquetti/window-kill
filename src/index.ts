@@ -7,7 +7,13 @@ function App() {
 
     try {
         appController.start({ playerName: 'Dan Ruan' })
-        console.log(appController.getState())
+
+
+        window.addEventListener('keydown', (ev) => {
+            if (ev.key == 'p') {
+                console.log(appController.getState())
+            }
+        })
     } catch (err: any) {
         console.error(err)
     }
