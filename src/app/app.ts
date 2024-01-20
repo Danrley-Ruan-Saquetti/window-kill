@@ -1,25 +1,24 @@
 import { CanvasController } from './modules/canvas/controller.js'
 import { GameController } from './modules/game/controller.js'
+import { PlayerController } from './modules/player/controller.js'
 
-export type AppInstanceOptions = {
-    canvasSelector: string
-}
+export type AppInstanceOptions = {}
 
 export class AppController {
     private canvasController: CanvasController
     private gameController: GameController
+    private playerController: PlayerController
 
-    constructor({ canvasSelector = '' }: AppInstanceOptions) {
+    constructor({ }: AppInstanceOptions) {
         this.gameController = new GameController()
         this.canvasController = new CanvasController()
-
-        this.canvasController.setCanvas(document.querySelector(canvasSelector) as HTMLCanvasElement)
+        this.playerController = new PlayerController()
     }
 
-    start() {
-        this.updateSizeCanvas()
+    start(args: { playerName: string }) {
         this.gameController.start()
         this.canvasController.start()
+        this.playerController.initComponents()
     }
 
     stop() {
@@ -27,10 +26,7 @@ export class AppController {
         this.canvasController.stop()
     }
 
-    private updateSizeCanvas() {
-        this.canvasController.resizeCanvas({
-            width: window.innerWidth,
-            height: window.innerHeight,
-        })
+    getState() {
+        return { ...this.gameController.state }
     }
 }

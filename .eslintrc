@@ -44,6 +44,7 @@
         "no-trailing-spaces": "warn",
         "no-multiple-empty-lines": "off",
         "no-inline-comments": "off",
+        "@typescript-eslint/no-namespace": "off",
         "no-explicit-any": "off",
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/ban-types": "off",

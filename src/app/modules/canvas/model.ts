@@ -20,6 +20,10 @@ export class CanvasRepository {
         return CanvasRepository.canvas
     }
 
+    set canvas(canvas: CanvasModel.Canvas) {
+        CanvasRepository.canvas = canvas
+    }
+
     get context() {
         return CanvasRepository.context
     }

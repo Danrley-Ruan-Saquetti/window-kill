@@ -3,20 +3,20 @@ import { GameRepository } from './model.js'
 export class GameController {
     private repo: GameRepository
     private requestAnimationFrameId = 0
-    private count = 0
 
     constructor() {
         this.repo = new GameRepository()
     }
+
+    initComponents() { }
 
     start() {
         if (this.isRunning()) {
             return
         }
 
-        this.repo.update({
-            isRunning: true,
-        })
+        this.initComponents()
+        this.repo.state.isRunning = true
 
         this.update()
     }
@@ -24,9 +24,7 @@ export class GameController {
     stop() {
         cancelAnimationFrame(this.requestAnimationFrameId)
 
-        this.repo.update({
-            isRunning: false,
-        })
+        this.repo.state.isRunning = false
     }
 
     update() {
@@ -37,5 +35,9 @@ export class GameController {
 
     isRunning() {
         return this.repo.state.isRunning
+    }
+
+    get state() {
+        return this.repo.state
     }
 }
