@@ -16,6 +16,8 @@ export class AppController {
     }
 
     start(args: { playerName: string }) {
+        this.canvasController.initComponents()
+        this.gameController.initComponents()
         this.gameController.start()
         this.canvasController.start()
         this.playerController.initComponents()

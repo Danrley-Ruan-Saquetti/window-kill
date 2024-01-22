@@ -23,7 +23,7 @@ export namespace PlayerModel {
 }
 
 export class Player extends ObjectAbstract {
-    speed = 2
+    speed = 3
     radius = 15
     stateMove = {
         MOVE_DOWN: false,
@@ -46,6 +46,11 @@ export class Player extends ObjectAbstract {
 
     constructor() {
         super()
+
+        this.position = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+        }
     }
 
     moveDown() {
@@ -98,6 +103,8 @@ export class Player extends ObjectAbstract {
         this.position.x += speed.x
 
         this.fixLimitPosition({ width: this.radius, height: this.radius })
+
+        return speed.y != 0 || speed.x != 0
     }
 
     isValidKeyPressDown(key: string) {

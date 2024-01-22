@@ -14,6 +14,10 @@ export class CanvasRepository {
 
         CanvasRepository.canvas = canvas
         CanvasRepository.context = canvas.getContext('2d') as CanvasModel.Context
+
+        if (!CanvasRepository.context) {
+            throw new Error('Context not defined')
+        }
     }
 
     get canvas() {
