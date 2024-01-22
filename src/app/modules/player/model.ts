@@ -1,17 +1,16 @@
 import { ObjectAbstract, ObjectModel } from '../object/model.js'
 
 export namespace PlayerModel {
-    export type Model = ObjectModel.Model
+    export interface Model extends ObjectModel.Model {
+        radius: number
+        speed: number
+    }
 
     export enum MAP_KEYS_CONTROL {
         MOVE_UP = 'w',
         MOVE_DOWN = 's',
         MOVE_LEFT = 'a',
         MOVE_RIGHT = 'd',
-        STOP_UP = 'w',
-        STOP_DOWN = 's',
-        STOP_LEFT = 'a',
-        STOP_RIGHT = 'd',
     }
 
     export function getKeyPressed(key: string): MAP_KEYS | null {
@@ -24,21 +23,25 @@ export namespace PlayerModel {
 }
 
 export class Player extends ObjectAbstract {
+    speed = 2
+    radius = 15
     stateMove = {
         MOVE_DOWN: false,
         MOVE_LEFT: false,
         MOVE_RIGHT: false,
         MOVE_UP: false,
     }
-    GLOBAL_MAP_KEY: { [x in PlayerModel.MAP_KEYS]: () => void | any } = {
+    GLOBAL_MAP_KEY_PRESS_DOWN: { [x in PlayerModel.MAP_KEYS]: () => void | any } = {
         MOVE_DOWN: () => this.moveDown(),
         MOVE_UP: () => this.moveUp(),
         MOVE_LEFT: () => this.moveLeft(),
         MOVE_RIGHT: () => this.moveRight(),
-        STOP_DOWN: () => this.stopDown(),
-        STOP_UP: () => this.stopUp(),
-        STOP_LEFT: () => this.stopLeft(),
-        STOP_RIGHT: () => this.stopRight(),
+    }
+    GLOBAL_MAP_KEY_PRESS_UP: { [x in PlayerModel.MAP_KEYS]?: () => void | any } = {
+        MOVE_DOWN: () => this.stopDown(),
+        MOVE_UP: () => this.stopUp(),
+        MOVE_LEFT: () => this.stopLeft(),
+        MOVE_RIGHT: () => this.stopRight(),
     }
 
     constructor() {
@@ -74,11 +77,34 @@ export class Player extends ObjectAbstract {
         this.stateMove.MOVE_RIGHT = false
     }
 
-    isValidKey(key: string) {
+    movePlayer() {
+        if (this.stateMove.MOVE_DOWN) {
+            this.position.y += this.speed
+        } else if (this.stateMove.MOVE_UP) {
+            this.position.y -= this.speed
+        }
+        if (this.stateMove.MOVE_RIGHT) {
+            this.position.x += this.speed
+        } else if (this.stateMove.MOVE_LEFT) {
+            this.position.x -= this.speed
+        }
+
+        this.fixLimitPosition({ width: this.radius, height: this.radius })
+    }
+
+    isValidKeyPressDown(key: string) {
         if (!key) {
             return false
         }
 
-        return !!this.GLOBAL_MAP_KEY[key as PlayerModel.MAP_KEYS]
+        return !!this.GLOBAL_MAP_KEY_PRESS_DOWN[key as PlayerModel.MAP_KEYS]
+    }
+
+    isValidKeyPressUp(key: string) {
+        if (!key) {
+            return false
+        }
+
+        return !!this.GLOBAL_MAP_KEY_PRESS_DOWN[key as PlayerModel.MAP_KEYS]
     }
 }

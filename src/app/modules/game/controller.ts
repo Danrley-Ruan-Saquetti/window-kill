@@ -1,14 +1,19 @@
+import { PlayerController } from '../player/controller.js'
 import { GameRepository } from './model.js'
 
 export class GameController {
     private repo: GameRepository
+    private playerController: PlayerController
     private requestAnimationFrameId = 0
 
     constructor() {
         this.repo = new GameRepository()
+        this.playerController = new PlayerController()
     }
 
-    initComponents() { }
+    initComponents() {
+
+    }
 
     start() {
         if (this.isRunning()) {
@@ -28,6 +33,7 @@ export class GameController {
     }
 
     update() {
+        this.playerController.update()
         if (this.isRunning()) {
             this.requestAnimationFrameId = requestAnimationFrame(() => this.update())
         }

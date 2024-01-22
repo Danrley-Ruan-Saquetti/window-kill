@@ -1,5 +1,4 @@
 import { Coordinates } from '../../../types'
-import { PlayerModel } from '../player/model.js'
 
 export namespace ObjectModel {
     export type Model = {
@@ -20,7 +19,23 @@ export namespace ObjectModel {
     }
 }
 
-export class ObjectAbstract implements PlayerModel.Model {
+export class ObjectAbstract implements ObjectModel.Model {
     id = ObjectModel.generateId()
     position = { x: 0, y: 0 }
+
+    protected fixLimitPosition({ height, width }: { height: number, width: number }) {
+        const maxWidth = window.innerWidth
+        const maxHeight = window.innerHeight
+
+        if (this.position.x - (width / 2) < 0) {
+            this.position.x = width / 2
+        } else if (this.position.x + (width / 2) > maxWidth) {
+            this.position.x = width / 2
+        }
+        if (this.position.y - (height / 2) < 0) {
+            this.position.y = height / 2
+        } else if (this.position.x + (height / 2) > maxHeight) {
+            this.position.y = height / 2
+        }
+    }
 }
