@@ -78,16 +78,24 @@ export class Player extends ObjectAbstract {
     }
 
     movePlayer() {
+        const speed = {
+            x: 0,
+            y: 0
+        }
+
         if (this.stateMove.MOVE_DOWN) {
-            this.position.y += this.speed
+            speed.y = this.speed
         } else if (this.stateMove.MOVE_UP) {
-            this.position.y -= this.speed
+            speed.y = -this.speed
         }
         if (this.stateMove.MOVE_RIGHT) {
-            this.position.x += this.speed
+            speed.x = this.speed
         } else if (this.stateMove.MOVE_LEFT) {
-            this.position.x -= this.speed
+            speed.x = -this.speed
         }
+
+        this.position.y += speed.y
+        this.position.x += speed.x
 
         this.fixLimitPosition({ width: this.radius, height: this.radius })
     }
